@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/2ce8bca9b1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="test.css">
+    <title>Home</title>
+    <style>
+        .Home-main{
+        display: flex;
+        }
+        .Home-link{
+        text-decoration: none;
+        color: white;
+        /* padding-right: 15px; */
+      }
+      .Home-link-active{
+       border-bottom: 1px solid white; /* Highlight color for the active link */
+        color: #fff;
+      }
+      .useradd{
+        padding: 8px;
+        font-size: 15px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .useradd:hover{
+        background-color: aqua;
+      }
+      .image-preview {
+        text-align: center;
+      }
+      #image-upload {
+          display: block; 
+         display: block; 
+         margin: auto;
+         /* text-align: center;
+         margin: auto;
+         position: absolute;
+         top: 72%; */
+      }
+      #preview-image {
+          max-width: 100%;
+          max-height: 300px;
+          margin-top: 10px;
+          display: none; /* Initially hide the image preview */
+          width: 50%; 
+          margin: auto;
+      }
+      #fname-field, #lname-field, #mail-field, #num-field{
+        padding: 5px;
+        font-size: 16px;
+        border-radius: 8px;
+      }
+      #image8{
+        width: 250px;
+      }
+        table {
+        width: 100%;
+        /* border: 1px solid black; */
+        border-collapse: collapse;
+        margin: 0;
+        /* box-shadow: 0 0 5px rgba(0, 0, 0, .25); */
+      }
+      table tr{
+        padding: .45em;
+      }
+      tr th{
+        background-color: #6e0737;
+      }
+      tbody tr:nth-child(even){
+        background-color: #eaeaea;
+      }
+      table th,
+      table td{
+        font-size: 1em;
+        padding: 1em;
+        text-align: center;
+      }
+        th{
+        color: #fff;
+        font-size: 1.15em;
+      }
+      #error-msg, #error-msg1, #error-msg2, #error-msg3, #error-msg4{
+        font-size: 12px;
+      }
+      @media (max-width:500px){
+        /* table{
+          border: 3px solid #6e0737;
+        } */
+        table  tr th{
+          display: none;
+        }
+        table tr{
+          display: block;
+        }
+        table th,table td{
+          padding: .5em;
+        }
+        table td{
+          text-align: right;
+          display: block;
+          font-size: 1em;
+        }
+        table td::before{
+          content: attr(data-title)":";
+          float: left;
+          font-weight: 600;
+        };
+        tbody tr:nth-child(even){
+          background-color: #6e0737;
+          color: #fff;
+        }
+      }
+      .btn1.unactive{
+        display: none;
+      }
+      .btn2{
+        display: none;
+      }
+      .btn2.active{
+        display:block;
+      }
+      .btn2-class{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #edit-btn{
+        padding: 5px;
+        width: 50px;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: lightgreen;
+      }
+      #delete-btn{
+        padding: 5px;
+        width: 50px;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: red;
+        color: white;
+        font-weight: 500;
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h3 class="logo">LOGO</h3>
+        <div class="Home-main">
+            <a class="Home-link" href="ds.html">Home</a>
+        <div class="dropdown">
+        <button class="dropbtn"><i class="fa-solid fa-user"></i><span class="user">Awesuddin</span><i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <a href="profile.html"><i class="fa-solid fa-user" style="padding-right: 5px;"></i>Profile</a>
+                <a href="change-password.html"><i class="fa-solid fa-lock" style="padding-right: 5px;"></i>Change Password</a>
+                <a href="index.html"><i class="fa-solid fa-right-from-bracket" style="padding-right: 5px;"></i>Logout</a>
+            </div>
+        </div>
+        </div>
+    </nav>
+    <div class="content">
+        <input type="button" value="Add-User" class="useradd" onclick="validation(event)">
+    </div>
+    <div class="data">
+        <br>
+        <table id='data2'>
+          <!-- <tr id="tr">
+            <th>Profile</th>
+            <th>Frist Name</th>
+            <th>Last Name</th>
+            <th>E-mail</th>
+            <th>Mobile Number</th>
+            <th>Actions</th>
+        </tr> -->  
+        </table>
+        <div class="popup">
+            <div class="head">
+              <div class="icon">
+                <div class="btn">
+                  <button class="close-btn">&times;</button>
+                   </div>
+                <div class="box">
+                <div class="row">
+                    <input type="text" placeholder="FirstName" id="fname-field" >
+                    <br>
+                    <span id="error-msg"></span>
+                  </div>
+                  <div class="row">
+                    <input type="text" placeholder="LastName" id="lname-field" >
+                    <br>
+                    <span id="error-msg1"></span>
+                  </div>
+                  <div class="row">
+                    <input type="email" placeholder="Email" id="mail-field" >
+                    <br>
+                    <span id="error-msg2"></span>
+                  </div> 
+                  <div class="row">
+                    <input type="num" placeholder="Phone" id="num-field" >
+                    <br>
+                    <span id="error-msg3"></span>
+                  </div>  
+                  <div class="row">
+                    <img src="preview-image" alt="Image Preview" id="preview-image"><br>
+                    
+                    <input type="file" id="image-upload" accept="image/*" required>
+                    <span id="error-msg4"></span>
+                    <br>
+                  </div>  
+                  <input type="button" value="Add-User" class="btn1" > 
+                  <div class="btn2-class">       
+                  <input type="button" value="Update" class="btn2" onclick="updatedata(index)" >  
+                  </div>        
+                  </div>
+              </div>
+            </div>
+            
+          </div>
+    </div>
+    <script>
+      const images=[]
+      let formdata={
+        firstname:'',
+        lastname:'',
+        mail:'',
+        num:''
+      }
+      let errors={
+        firstname:'',
+        lastname:'',
+        
+      }
+      var firstname = document.getElementById("fname-field")
+      const lastname = document.getElementById("lname-field");
+      const mail = document.getElementById("mail-field")
+      const num = document.getElementById("num-field")
+      const submit=document.getElementsByClassName("btn1")[0];
+      const imageUpload = document.getElementById('image-upload');
+      let previewImage = document.getElementById('preview-image');
+      let previewImage1 = document.getElementById('preview-image1');
+      const imageu=document.getElementById("image8")
+      const databody = document.getElementById("data2");
+      var users=[];
+      let cardImageURL=""
+      var x;
+      var firstnamedata;
+      var lastnamedata;
+      var maildata;
+      var numdata;
+      var cardimageurl;
+      var validPhotoData;
+      var selectedrow;
+      var imageurl;
+      var error1=document.getElementById("error-msg");
+      var error2=document.getElementById("error-msg1");
+      var error3=document.getElementById("error-msg2");
+      var error4=document.getElementById("error-msg3");
+      var error5=document.getElementById("error-msg4");
+      
+      var currentURL = window.location.href;
+      var navLink = document.querySelector('a');
+
+      if (navLink.href === currentURL) {
+        navLink.classList.add('Home-link-active'); 
+      }  
+
+      firstname.addEventListener("input",()=>{
+         event.preventDefault();
+      if(!firstname.value){
+        error1.textContent="Field Should not be Empty";
+        firstnamedata=false;
+      }else {
+         firstnamedata = true;
+         error1.textContent = "";
+        }
+      
+      }) 
+
+      lastname.addEventListener("input",()=>{
+        event.preventDefault();
+      if(!lastname.value){
+        error2.textContent="Field Should not be Empty";
+        lastnamedata=false;
+      }else {
+         lastnamedata = true;
+         error2.textContent = "";
+        }
+      })
+
+      mail.addEventListener("input",()=>{
+        event.preventDefault();
+      if(!mail.value){
+        error3.textContent="Field Should not be Empty";
+        maildata=false;
+      }
+      else if(!mail.value.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)){
+        error3.textContent="Please Enter a valid Email";
+        maildata=false;
+      }
+      else {
+         maildata = true;
+         error3.textContent = "";
+        }
+      })
+
+      num.addEventListener("input",()=>{
+        event.preventDefault();
+      if(!num.value){
+        error4.textContent="Field Should not be Empty";
+        numdata=false;
+      }else if(!num.value.match(/^\d{10}$/)){
+        error4.textContent="Please Enter a valid Phone number";
+        numdata=false;
+      }
+      else {
+         numdata = true;
+         error4.textContent = "";
+        }
+      })
+      
+      function deleteData(index) {
+        URL.revokeObjectURL(users[index].image);
+        users.splice(index, 1);
+        displayuser();
+        }
+
+        // function editData(td){
+        //  selectedrow = td.parentNode.parentNode;
+        // //  console.log(selectedrow = td.parentNode.parentNode.rowIndex);
+        // //  console.log(selectedrow.cells[0]);
+        //  document.querySelector(".popup").classList.add("active");
+        //  firstname.value = selectedrow.cells[1].innerHTML; 
+        //  lastname.value =  selectedrow.cells[2].innerHTML;
+        //  mail.value = selectedrow.cells[3].innerHTML;
+        //  num.value = selectedrow.cells[4].innerHTML;
+        //  previewImage.src=images[(td.parentNode.parentNode.rowIndex-1)/2];
+        //  cardImageURL=images[(td.parentNode.parentNode.rowIndex-1)/2];
+        //  console.log(images[(td.parentNode.parentNode.rowIndex-1)/2]);
+
+        // //  previewImage.innerHTML=`<img src="${previewImage1}" alt="Image Preview" id="preview-image1"><br>`
+        // //  previewImage.src=imageu.src;
+        //  document.querySelector(".btn1").classList.add("unactive");
+        //  document.querySelector(".btn2").classList.add("active");
+        //  document.querySelector(".popup .close-btn").addEventListener("click",function(){
+        //  document.querySelector(".btn1").classList.remove("unactive");
+        //  document.querySelector(".btn2").classList.remove("active");
+        //  document.querySelector(".popup").classList.remove("active");
+        //    });
+        // }
+
+        function updatedata(index){
+          const user=users[index];
+          console.log(user);
+          firstname.value=user.firstname1
+          console.log(firstname1);
+          lastname.value=user.lastname1;
+          mail.value=user.email1;
+          num.value=user.phone1;
+          imageUpload.value="";
+          if(imageUpload.value===""){
+            user.image=user.image;
+          }
+          previewImage.src=user.image;
+          document.querySelector(".popup").classList.remove("active");
+          document.querySelector(".btn1").classList.remove("unactive");
+          document.querySelector(".btn2").classList.remove("active");
+          user.firstname1=firstname;
+          user.lastname1=lastname;
+          user.email1=mail;
+          user.phone1=num;
+        //   displayuser();
+        //   delete
+          // clearErrors();
+          clearInputs();
+        }
+        function clearInputs() {
+            firstname.value = "";
+            lastname.value = "";
+            mail.value = "";
+            num.value = "";
+            previewImage.src="";
+        }
+        function clearErrors() {
+            error1.textContent = "";
+            error2.textContent = "";
+            error3.textContent= "";
+            error4.textContent = "";
+            error5.textContent = "";
+        }
+       function validation(event){
+        event.preventDefault();
+        document.querySelector(".popup").classList.add("active");
+         document.querySelector(".popup .close-btn").addEventListener("click",function(){
+         clearInputs();
+         clearErrors();
+         document.querySelector(".popup").classList.remove("active");
+           });
+          }
+  
+    imageUpload.addEventListener('change', function () {
+        const file = this.files[0];
+    if (file) {   
+      imageurl=URL.createObjectURL(file);
+      previewImage.src=imageurl;
+      cardimageurl=imageurl;
+      // cardImageURL=images[(td.parentNode.parentNode.rowIndex-1)/2];
+      console.log(imageurl)
+      images.push(imageurl);
+       console.log(images);
+      previewImage.style.display = 'block';
+      validPhotoData = true;
+      error5.textContent = "";
+    } else {
+        previewImage.src = "";
+        validPhotoData = false;
+        error5.textContent = "This field is required";
+    }
+    });
+       function adduser(e){              e.preventDefault();
+         var firstname1=firstname.value;
+         var lastname1=lastname.value;
+         var email1=mail.value;
+         var phone1=num.value;
+         const user={firstname1,lastname1,email1,phone1, image:cardimageurl};
+         users.push(user);
+         console.log(users)
+        document.querySelector(".popup").classList.remove("active"); 
+       }
+
+      function displayuser(){
+        //  e.preventDefault();
+        databody.innerHTML="";
+  users.forEach((userdata,index)=>{
+        databody.innerHTML += `
+        <tr id="tr">
+                <th>Profile</th>
+                <th>Frist Name</th>
+                <th>Last Name</th>
+                <th>E-mail</th>
+                <th>Mobile Number</th>
+                <th>Actions</th>
+            </tr>
+        <tr>
+        <td  data-title="Profile"><img src="${cardimageurl}" alt="image" id="image8"></td>
+        <td data-title="FristName">${firstname.value}</td>
+        <td  data-title="LastName">${lastname.value}</td>
+        <td  data-title="Email">${mail.value}</td>
+        <td  data-title="Phone number">${num.value}</td>
+        <td  data-title="Actions"><input type="button" id="edit-btn" value="Edit" onclick="editData(this)">&nbsp<input type="button" id="delete-btn" value="Delete" onclick="deleteData(${index})"></td>
+        </tr>`
+      
+       document.querySelector(".popup").classList.remove("active")
+       clearInputs();
+       clearErrors();
+          })
+      }
+     
+     submit.addEventListener("click", (e)=>{
+     e.preventDefault()
+    if(firstnamedata && lastnamedata  && maildata && numdata && validPhotoData){
+     adduser(e);
+     displayuser(e);
+     clearInputs();
+    }
+     else if(firstnamedata){
+      error2.textContent="Field is required";
+      error3.textContent="Field is required";
+      error4.textContent="Field is required";
+      error5.textContent="Field is required";
+    }
+    else if(lastnamedata){
+      error1.textContent="Field is required";
+      error3.textContent="Field is required";
+      error4.textContent="Field is required";
+      error5.textContent="Field is required";
+    }
+    else if(maildata){
+      error1.textContent="Field is required";
+      error2.textContent="Field is required";
+      error4.textContent="Field is required";     
+      error5.textContent="Field is required";
+    }
+    else if(numdata){
+      error1.textContent="Field is required";
+      error2.textContent="Field is required";
+      error3.textContent="Field is required";
+      error5.textContent="Field is required";
+    }
+    else if(validPhotoData){
+      error1.textContent="Field is required";
+      error2.textContent="Field is required";
+      error3.textContent="Field is required";
+      error4.textContent="Field is required";
+    }
+   else{
+    error1.textContent="Field is required";
+    error2.textContent="Field is required";
+    error3.textContent="Field is required";
+    error4.textContent="Field is required";
+    error5.textContent="Field is required";
+   }
+})
+    </script>
+</body>
+</html>
